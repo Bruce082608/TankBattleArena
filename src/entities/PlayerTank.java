@@ -8,6 +8,7 @@ import obstacles.Obstacle;
 import systems.CollisionManager;
 import systems.ControlScheme;
 import systems.InputHandler;
+import systems.PowerUpType;
 import ui.GameArt;
 
 /**
@@ -15,10 +16,10 @@ import ui.GameArt;
  */
 public class PlayerTank extends Tank {
     /** Default movement speed in pixels per second. */
-    public static final double DEFAULT_MOVEMENT_SPEED = 190;
+    public static final double DEFAULT_MOVEMENT_SPEED = 175;
 
     /** Default rotation speed in degrees per second. */
-    public static final double DEFAULT_ROTATION_SPEED = 170;
+    public static final double DEFAULT_ROTATION_SPEED = 155;
 
     /** Standard tank width. */
     public static final double TANK_WIDTH = 54;
@@ -28,6 +29,8 @@ public class PlayerTank extends Tank {
 
     private final String playerName;
     private final ControlScheme controls;
+    private PowerUpType equippedPowerUp;
+    private int powerUpAmmo;
 
     /**
      * Creates a player tank with colors and controls.
@@ -106,5 +109,54 @@ public class PlayerTank extends Tank {
      */
     public String getPlayerName() {
         return playerName;
+    }
+
+    /**
+     * Equips a limited-use weapon pickup.
+     *
+     * @param powerUpType weapon type
+     * @param ammo number of shots or uses
+     */
+    public void equipPowerUp(PowerUpType powerUpType, int ammo) {
+        this.equippedPowerUp = powerUpType;
+        this.powerUpAmmo = ammo;
+    }
+
+    /**
+     * Removes the currently equipped weapon.
+     */
+    public void clearPowerUp() {
+        equippedPowerUp = null;
+        powerUpAmmo = 0;
+    }
+
+    /**
+     * Consumes one use of the equipped weapon.
+     */
+    public void consumePowerUpAmmo() {
+        if (powerUpAmmo > 0) {
+            powerUpAmmo--;
+        }
+        if (powerUpAmmo == 0) {
+            equippedPowerUp = null;
+        }
+    }
+
+    /**
+     * Gets the current equipped weapon pickup.
+     *
+     * @return powerup type, or null for regular cannon
+     */
+    public PowerUpType getEquippedPowerUp() {
+        return equippedPowerUp;
+    }
+
+    /**
+     * Gets remaining weapon uses.
+     *
+     * @return ammo count
+     */
+    public int getPowerUpAmmo() {
+        return powerUpAmmo;
     }
 }

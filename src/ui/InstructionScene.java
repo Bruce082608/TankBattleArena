@@ -41,30 +41,35 @@ public class InstructionScene {
      */
     private BorderPane createView(SceneManager sceneManager) {
         Label title = new Label("Instructions");
-        title.setStyle("-fx-font-size: 42px; -fx-font-weight: 800; -fx-text-fill: #f2d16b;");
+        title.setStyle("-fx-font-size: 42px; -fx-font-weight: 900; -fx-text-fill: #1f2529;");
 
         Label text = new Label("""
                 Player 1 Blue Tank
-                W/S move, A/D rotate, SPACE shoots
+                E/D move forward and backward, S/F rotate, Q shoots
 
                 Player 2 Red Tank
-                UP/DOWN move, LEFT/RIGHT rotate, ENTER shoots
+                UP/DOWN move forward and backward, LEFT/RIGHT rotate, M shoots
 
-                Each tank has 100 HP. Bullets deal 20 damage, bounce up to 5 times, and have a 500 ms cooldown.
-                Destroy the opponent or have more HP when the 120 second timer expires.
-                The winner of a round gains 1 point, both tanks respawn, and the map stays active.
+                Player 3 Green Tank
+                Move the mouse to drive and aim, left click shoots
+
+                Each tank has 3 HP. Regular bullets and mines deal 1 damage.
+                Regular bullets bounce around the arena and stay dangerous for several seconds.
+                Laser pickup shows a reflected aim preview, then fires a beam that deals 3 damage.
+                The last tank alive gains 1 point, then everyone respawns.
                 First player to 5 points wins the match.
 
+                Pickups: Gatling, Mine, Laser, Shotgun, Shield, and Homing Missile.
                 ESC opens the pause menu.
                 """);
-        text.setStyle("-fx-font-size: 18px; -fx-text-fill: #e8f0f2; -fx-line-spacing: 4;");
+        text.setStyle("-fx-font-size: 18px; -fx-text-fill: #20262b; -fx-line-spacing: 4;");
         text.setMaxWidth(720);
 
         Button back = new Button("Back");
         back.setPrefWidth(220);
         back.setPrefHeight(46);
         back.setStyle("-fx-font-size: 17px; -fx-font-weight: 700; -fx-background-radius: 6;"
-                + "-fx-background-color: #e7edf0; -fx-text-fill: #172026;");
+                + "-fx-background-color: #20262b; -fx-text-fill: #f5f2e9;");
         back.setOnAction(event -> sceneManager.showMainMenu());
 
         VBox content = new VBox(24, title, text, back);
@@ -72,7 +77,7 @@ public class InstructionScene {
         content.setPadding(new Insets(50));
 
         BorderPane root = new BorderPane(content);
-        root.setStyle("-fx-background-color: linear-gradient(to bottom, #182024, #2b3638);");
+        root.setStyle("-fx-background-color: #f5f2e9;");
         return root;
     }
 }

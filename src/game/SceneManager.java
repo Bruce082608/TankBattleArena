@@ -26,6 +26,7 @@ public class SceneManager {
     private final Stage stage;
     private final List<MapData> maps;
     private MapData selectedMap;
+    private int playerCount = 2;
     private GameManager activeGame;
 
     /**
@@ -67,14 +68,14 @@ public class SceneManager {
      * Starts a fresh match on the selected map.
      */
     public void startGame() {
-        launchGame(new ScoreManager(SCORE_TO_WIN));
+        launchGame(new ScoreManager(SCORE_TO_WIN, playerCount));
     }
 
     /**
      * Starts a fresh match on the currently selected map after game over.
      */
     public void restartMatch() {
-        launchGame(new ScoreManager(SCORE_TO_WIN));
+        launchGame(new ScoreManager(SCORE_TO_WIN, playerCount));
     }
 
     /**
@@ -112,6 +113,24 @@ public class SceneManager {
      */
     public MapData getSelectedMap() {
         return selectedMap;
+    }
+
+    /**
+     * Selects the local player count for the next match.
+     *
+     * @param playerCount local player count
+     */
+    public void setPlayerCount(int playerCount) {
+        this.playerCount = playerCount;
+    }
+
+    /**
+     * Gets the selected local player count.
+     *
+     * @return player count
+     */
+    public int getPlayerCount() {
+        return playerCount;
     }
 
     /**

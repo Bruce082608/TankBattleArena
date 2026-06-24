@@ -47,18 +47,16 @@ public class GameOverScene {
      */
     private BorderPane createView(SceneManager sceneManager, MapData mapData, ScoreManager scoreManager) {
         Label title = new Label("Game Over");
-        title.setStyle("-fx-font-size: 50px; -fx-font-weight: 900; -fx-text-fill: #f2d16b;");
+        title.setStyle("-fx-font-size: 50px; -fx-font-weight: 900; -fx-text-fill: #1f2529;");
 
         Label winner = new Label(scoreManager.getWinnerName() + " wins");
-        winner.setStyle("-fx-font-size: 30px; -fx-font-weight: 800; -fx-text-fill: #edf6f8;");
+        winner.setStyle("-fx-font-size: 30px; -fx-font-weight: 800; -fx-text-fill: #20262b;");
 
         Label summary = new Label("Final Score  "
-                + scoreManager.getPlayerOneScore()
-                + " : "
-                + scoreManager.getPlayerTwoScore()
+                + scoreManager.formatScores()
                 + "\nMap: "
                 + mapData.getName());
-        summary.setStyle("-fx-font-size: 18px; -fx-text-fill: #cfe0e5; -fx-text-alignment: center;");
+        summary.setStyle("-fx-font-size: 18px; -fx-text-fill: #354148; -fx-text-alignment: center;");
 
         Button playAgain = createButton("Play Again");
         playAgain.setOnAction(event -> sceneManager.restartMatch());
@@ -71,7 +69,7 @@ public class GameOverScene {
         content.setPadding(new Insets(50));
 
         BorderPane root = new BorderPane(content);
-        root.setStyle("-fx-background-color: radial-gradient(center 50% 38%, radius 78%, #354148, #131a1d);");
+        root.setStyle("-fx-background-color: #f5f2e9;");
         return root;
     }
 
@@ -86,7 +84,7 @@ public class GameOverScene {
         button.setPrefWidth(240);
         button.setPrefHeight(46);
         button.setStyle("-fx-font-size: 17px; -fx-font-weight: 800; -fx-background-radius: 6;"
-                + "-fx-background-color: #e7edf0; -fx-text-fill: #172026;");
+                + "-fx-background-color: #20262b; -fx-text-fill: #f5f2e9;");
         return button;
     }
 }

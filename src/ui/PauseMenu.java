@@ -20,7 +20,7 @@ public class PauseMenu extends StackPane {
     public PauseMenu(Runnable resumeAction, Runnable restartRoundAction, Runnable mainMenuAction) {
         setStyle("-fx-background-color: rgba(8, 12, 15, 0.78);");
         Label title = new Label("Paused");
-        title.setStyle("-fx-font-size: 42px; -fx-font-weight: 900; -fx-text-fill: #f2d16b;");
+        title.setStyle("-fx-font-size: 42px; -fx-font-weight: 900; -fx-text-fill: #f5f2e9;");
 
         Button resume = createButton("Resume");
         resume.setOnAction(event -> resumeAction.run());

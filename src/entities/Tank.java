@@ -14,13 +14,13 @@ import systems.CollisionManager;
  */
 public abstract class Tank extends GameObject {
     /** Maximum health for every tank. */
-    public static final int MAX_HP = 100;
+    public static final int MAX_HP = 3;
 
     /** Damage dealt by each bullet. */
-    public static final int BULLET_DAMAGE = 20;
+    public static final int BULLET_DAMAGE = 1;
 
     /** Cooldown between shots in nanoseconds. */
-    public static final long BULLET_COOLDOWN_NANOS = 500_000_000L;
+    public static final long BULLET_COOLDOWN_NANOS = 420_000_000L;
 
     private final double movementSpeed;
     private final double rotationSpeed;
@@ -28,6 +28,7 @@ public abstract class Tank extends GameObject {
     private int hp = MAX_HP;
     private double rotationDegrees;
     private long lastShotNanos = -BULLET_COOLDOWN_NANOS;
+    private boolean shieldActive;
 
     /**
      * Creates a tank with shared movement and combat properties.
@@ -135,14 +136,47 @@ public abstract class Tank extends GameObject {
      * @return a bullet when firing succeeds, otherwise null
      */
     public Bullet tryShoot(long nowNanos) {
-        if (nowNanos - lastShotNanos < BULLET_COOLDOWN_NANOS) {
+        if (!canShoot(nowNanos, BULLET_COOLDOWN_NANOS)) {
             return null;
         }
+        return createBullet(rotationDegrees, Bullet.SPEED, Bullet.MAX_BOUNCES, Bullet.MAX_LIFETIME_SECONDS, BULLET_DAMAGE);
+    }
+
+    /**
+     * Checks and records a shot using the requested cooldown.
+     *
+     * @param nowNanos current AnimationTimer timestamp
+     * @param cooldownNanos weapon cooldown
+     * @return true when firing is allowed
+     */
+    public boolean canShoot(long nowNanos, long cooldownNanos) {
+        if (nowNanos - lastShotNanos < cooldownNanos) {
+            return false;
+        }
         lastShotNanos = nowNanos;
+        return true;
+    }
+
+    /**
+     * Creates a projectile using the tank's muzzle as origin.
+     *
+     * @param rotationDegrees direction in degrees
+     * @param speed projectile speed
+     * @param maxBounces maximum wall bounces
+     * @param maxLifetimeSeconds projectile lifetime
+     * @param damage damage dealt on hit
+     * @return configured projectile
+     */
+    public Bullet createBullet(
+            double rotationDegrees,
+            double speed,
+            int maxBounces,
+            double maxLifetimeSeconds,
+            int damage) {
         double radians = Math.toRadians(rotationDegrees);
         double startX = getCenterX() + Math.cos(radians) * (getWidth() / 2.0 + 8) - Bullet.SIZE / 2.0;
         double startY = getCenterY() + Math.sin(radians) * (getWidth() / 2.0 + 8) - Bullet.SIZE / 2.0;
-        return new Bullet(this, startX, startY, rotationDegrees, bulletColor, BULLET_DAMAGE);
+        return new Bullet(this, startX, startY, rotationDegrees, bulletColor, damage, speed, maxBounces, maxLifetimeSeconds);
     }
 
     /**
@@ -151,6 +185,11 @@ public abstract class Tank extends GameObject {
      * @param damage amount of damage to subtract
      */
     public void takeDamage(int damage) {
+        if (shieldActive) {
+            shieldActive = false;
+            updateShieldVisual();
+            return;
+        }
         hp = Math.max(0, hp - damage);
     }
 
@@ -160,6 +199,8 @@ public abstract class Tank extends GameObject {
     public void restoreHp() {
         hp = MAX_HP;
         getView().setOpacity(1.0);
+        shieldActive = false;
+        updateShieldVisual();
     }
 
     /**
@@ -195,6 +236,34 @@ public abstract class Tank extends GameObject {
     }
 
     /**
+     * Arms or clears the tank's one-hit shield.
+     *
+     * @param shieldActive whether the shield is active
+     */
+    public void setShieldActive(boolean shieldActive) {
+        this.shieldActive = shieldActive;
+        updateShieldVisual();
+    }
+
+    /**
+     * Reports whether the next hit will be blocked.
+     *
+     * @return true when shielded
+     */
+    public boolean hasShield() {
+        return shieldActive;
+    }
+
+    /**
+     * Gets the default bullet color for special projectiles.
+     *
+     * @return bullet color
+     */
+    public Color getBulletColor() {
+        return bulletColor;
+    }
+
+    /**
      * Gets the tank's current rotation.
      *
      * @return rotation in degrees
@@ -222,5 +291,14 @@ public abstract class Tank extends GameObject {
     private double normalize(double degrees) {
         double result = degrees % 360.0;
         return result < 0 ? result + 360.0 : result;
+    }
+
+    /**
+     * Adds a subtle halo while the shield is ready.
+     */
+    private void updateShieldVisual() {
+        getView().setEffect(shieldActive
+                ? new javafx.scene.effect.DropShadow(26, Color.rgb(112, 230, 255, 0.9))
+                : null);
     }
 }

@@ -6,6 +6,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
+import systems.PowerUpType;
 
 /**
  * Generates bitmap sprites used by ImageView-based game objects.
@@ -61,6 +65,50 @@ public final class GameArt {
         graphics.setStroke(Color.WHITE);
         graphics.setLineWidth(2);
         graphics.strokeOval(7, 7, 18, 18);
+        return snapshot(canvas);
+    }
+
+    /**
+     * Creates a compact pickup icon.
+     *
+     * @param type pickup type to draw
+     * @return generated powerup image
+     */
+    public static Image createPowerUpImage(PowerUpType type) {
+        Canvas canvas = new Canvas(64, 64);
+        GraphicsContext graphics = canvas.getGraphicsContext2D();
+        graphics.setFill(Color.TRANSPARENT);
+        graphics.fillRect(0, 0, 64, 64);
+        graphics.setFill(Color.rgb(28, 32, 36, 0.94));
+        graphics.fillRoundRect(8, 8, 48, 48, 10, 10);
+        graphics.setStroke(type.getColor());
+        graphics.setLineWidth(5);
+        graphics.strokeRoundRect(10, 10, 44, 44, 8, 8);
+        graphics.setFill(type.getColor());
+        graphics.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 25));
+        graphics.setTextAlign(TextAlignment.CENTER);
+        graphics.fillText(type.getSymbol(), 32, 41);
+        return snapshot(canvas);
+    }
+
+    /**
+     * Creates a mine sprite.
+     *
+     * @param color mine accent color
+     * @return generated mine image
+     */
+    public static Image createMineImage(Color color) {
+        Canvas canvas = new Canvas(48, 48);
+        GraphicsContext graphics = canvas.getGraphicsContext2D();
+        graphics.setFill(Color.TRANSPARENT);
+        graphics.fillRect(0, 0, 48, 48);
+        graphics.setFill(Color.rgb(20, 22, 24, 0.95));
+        graphics.fillOval(9, 9, 30, 30);
+        graphics.setStroke(color);
+        graphics.setLineWidth(4);
+        graphics.strokeOval(11, 11, 26, 26);
+        graphics.setFill(color);
+        graphics.fillOval(20, 20, 8, 8);
         return snapshot(canvas);
     }
 

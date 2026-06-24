@@ -42,7 +42,7 @@ public class MapSelectionMenu {
      */
     private BorderPane createView(SceneManager sceneManager) {
         Label title = new Label("Select Map");
-        title.setStyle("-fx-font-size: 42px; -fx-font-weight: 800; -fx-text-fill: #f2d16b;");
+        title.setStyle("-fx-font-size: 42px; -fx-font-weight: 900; -fx-text-fill: #1f2529;");
 
         VBox content = new VBox(16, title);
         content.setAlignment(Pos.CENTER);
@@ -64,7 +64,7 @@ public class MapSelectionMenu {
         content.getChildren().add(back);
 
         BorderPane root = new BorderPane(content);
-        root.setStyle("-fx-background-color: linear-gradient(to bottom, #192327, #28363b);");
+        root.setStyle("-fx-background-color: #f5f2e9;");
         return root;
     }
 
@@ -93,7 +93,7 @@ public class MapSelectionMenu {
         button.setPrefHeight(46);
         button.setWrapText(true);
         button.setStyle("-fx-font-size: 16px; -fx-font-weight: 700; -fx-background-radius: 6;"
-                + "-fx-background-color: #e7edf0; -fx-text-fill: #172026;");
+                + "-fx-background-color: #20262b; -fx-text-fill: #f5f2e9;");
         return button;
     }
 }

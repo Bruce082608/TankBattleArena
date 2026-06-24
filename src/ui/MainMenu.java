@@ -42,13 +42,28 @@ public class MainMenu {
      */
     private BorderPane createView(SceneManager sceneManager) {
         Label title = new Label("Tank Battle Arena");
-        title.setStyle("-fx-font-size: 52px; -fx-font-weight: 800; -fx-text-fill: #f2d16b;");
+        title.setStyle("-fx-font-size: 52px; -fx-font-weight: 900; -fx-text-fill: #1f2529;");
 
         Label selectedMap = new Label("Selected Map: " + sceneManager.getSelectedMap().getName());
-        selectedMap.setStyle("-fx-font-size: 18px; -fx-text-fill: #d8e6ea;");
+        selectedMap.setStyle("-fx-font-size: 18px; -fx-text-fill: #354148;");
+
+        Label mode = new Label("Local Players: " + sceneManager.getPlayerCount());
+        mode.setStyle("-fx-font-size: 17px; -fx-font-weight: 800; -fx-text-fill: #354148;");
 
         Button start = createMenuButton("Start Game");
         start.setOnAction(event -> sceneManager.startGame());
+
+        Button twoPlayers = createMenuButton("2 Players");
+        twoPlayers.setOnAction(event -> {
+            sceneManager.setPlayerCount(2);
+            sceneManager.showMainMenu();
+        });
+
+        Button threePlayers = createMenuButton("3 Players");
+        threePlayers.setOnAction(event -> {
+            sceneManager.setPlayerCount(3);
+            sceneManager.showMainMenu();
+        });
 
         Button selectMap = createMenuButton("Select Map");
         selectMap.setOnAction(event -> sceneManager.showMapSelection());
@@ -59,12 +74,12 @@ public class MainMenu {
         Button exit = createMenuButton("Exit");
         exit.setOnAction(event -> Platform.exit());
 
-        VBox menu = new VBox(18, title, selectedMap, start, selectMap, instructions, exit);
+        VBox menu = new VBox(16, title, selectedMap, mode, start, twoPlayers, threePlayers, selectMap, instructions, exit);
         menu.setAlignment(Pos.CENTER);
         menu.setPadding(new Insets(60));
 
         BorderPane root = new BorderPane(menu);
-        root.setStyle("-fx-background-color: radial-gradient(center 50% 35%, radius 75%, #32444a, #151c20);");
+        root.setStyle("-fx-background-color: #f5f2e9;");
         return root;
     }
 
@@ -79,7 +94,7 @@ public class MainMenu {
         button.setPrefWidth(260);
         button.setPrefHeight(48);
         button.setStyle("-fx-font-size: 18px; -fx-font-weight: 700; -fx-background-radius: 6;"
-                + "-fx-background-color: #e7edf0; -fx-text-fill: #182126;");
+                + "-fx-background-color: #20262b; -fx-text-fill: #f5f2e9;");
         return button;
     }
 }
