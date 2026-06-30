@@ -15,7 +15,7 @@ public class Bullet extends GameObject {
     public static final double SPEED = 468;
 
     /** Maximum number of wall or obstacle bounces before removal. */
-    public static final int MAX_BOUNCES = 8;
+    public static final int MAX_BOUNCES = 5;
 
     /** Maximum bullet lifetime in seconds. */
     public static final double MAX_LIFETIME_SECONDS = 7.5;

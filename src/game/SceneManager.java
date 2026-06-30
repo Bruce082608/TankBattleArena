@@ -1,6 +1,7 @@
 package game;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import app.Main;
 import javafx.scene.Parent;
@@ -79,6 +80,16 @@ public class SceneManager {
     }
 
     /**
+     * Continues the current match on a randomly selected new map.
+     *
+     * @param scoreManager current score state to preserve
+     */
+    public void continueMatchOnRandomMap(ScoreManager scoreManager) {
+        selectedMap = chooseRandomRestartMap();
+        launchGame(scoreManager);
+    }
+
+    /**
      * Shows the game-over scene for a completed match.
      *
      * @param scoreManager final score state
@@ -144,6 +155,21 @@ public class SceneManager {
         Scene scene = activeGame.createScene();
         stage.setScene(scene);
         activeGame.start();
+    }
+
+    /**
+     * Chooses a random restart map, avoiding the current map when alternatives exist.
+     *
+     * @return randomly chosen map for the next match
+     */
+    private MapData chooseRandomRestartMap() {
+        if (maps.size() <= 1) {
+            return selectedMap;
+        }
+        List<MapData> candidates = maps.stream()
+                .filter(map -> map != selectedMap)
+                .toList();
+        return candidates.get(ThreadLocalRandom.current().nextInt(candidates.size()));
     }
 
     /**

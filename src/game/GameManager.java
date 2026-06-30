@@ -996,16 +996,16 @@ public class GameManager {
             soundManager.playVictory();
             scheduleGameOver();
         } else {
-            scheduleRoundReset();
+            scheduleMapSwitch();
         }
     }
 
     /**
-     * Schedules the next round after a short animation delay.
+     * Schedules the next round on a random map after a short animation delay.
      */
-    private void scheduleRoundReset() {
+    private void scheduleMapSwitch() {
         PauseTransition delay = new PauseTransition(Duration.seconds(ROUND_RESET_DELAY_SECONDS));
-        delay.setOnFinished(event -> resetRound());
+        delay.setOnFinished(event -> sceneManager.continueMatchOnRandomMap(scoreManager));
         delay.play();
     }
 
