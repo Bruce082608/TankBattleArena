@@ -1,6 +1,6 @@
 # Tank Battle Arena
 
-Tank Battle Arena is a Java 17+ JavaFX desktop game inspired by the classic local Flash tank-duel formula: same-screen local players, tight arenas, ricocheting bullets, short health-based duels, instant round resets, and dangerous powerups.
+Tank Battle Arena is a Java 17+ JavaFX desktop game inspired by the classic local Flash tank-duel formula: same-screen local players, tight arenas, ricocheting bullets, short health-based duels, automatic map changes, and dangerous powerups.
 
 ## Run
 
@@ -47,7 +47,7 @@ Player 3 Green Tank:
 
 ## Rules
 
-Each tank has 3 HP. Regular bullets bounce around the arena, remain dangerous for several seconds, deal 1 damage, and can still hurt the tank that fired them after leaving the muzzle. The last surviving tank scores 1 point, then the round resets on the same map. The first player to 5 points wins the match.
+Each tank has 3 HP. Regular bullets bounce around the arena, remain dangerous for several seconds, deal 1 damage, and can still hurt the tank that fired them after leaving the muzzle. The last surviving tank scores 1 point, then the match automatically continues on a randomly selected different map while keeping the current scores. The first player to 5 points wins the match.
 
 Pickups spawn during play:
 

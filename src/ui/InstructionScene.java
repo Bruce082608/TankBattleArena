@@ -56,7 +56,8 @@ public class InstructionScene {
                 Each tank has 3 HP. Regular bullets and mines deal 1 damage.
                 Regular bullets bounce around the arena and stay dangerous for several seconds.
                 Laser pickup shows a reflected aim preview, then fires a beam that deals 3 damage.
-                The last tank alive gains 1 point, then everyone respawns.
+                The last tank alive gains 1 point.
+                The match then automatically switches to a random different map and keeps the scores.
                 First player to 5 points wins the match.
 
                 Pickups: Gatling, Mine, Laser, Shotgun, Shield, and Homing Missile.
